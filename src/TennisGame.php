@@ -22,16 +22,7 @@ class TennisGame
     public function score()
     {
         if($this->tie()){
-            $diferencia = $this->player1->points() - $this->player2->points();
-            if ($diferencia > 0){
-                return "Avantatge " . $this->player1->name();
-            }
-            if ($diferencia == 0){
-                return "Iguals";
-            }
-            if ($diferencia < 0){
-                return "Avantatge " . $this->player2->name();
-            }
+            return $this->resolveTie();
         }
 
         if($this->player1->score() == $this->player2->score()){
@@ -48,5 +39,32 @@ class TennisGame
     public function tie()
     {
         return $this->player1->points() > 3 || $this->player2->points() > 3;
+    }
+
+
+    protected function resolveTie()
+    {
+        $diferencia = $this->player1->points() - $this->player2->points();
+        if ($diferencia == 0){
+            return "Iguals";
+        }
+
+        $playerwins = $this->player1;
+
+        if($diferencia < 0){
+                $playerwins = $this->player2;
+        }
+
+        return $this->scoreAvantatge($playerwins);
+
+
+    }
+
+    /**
+     * @return string
+     */
+    protected function scoreAvantatge($player)
+    {
+        return "Avantatge " . $player->name();
     }
 }
