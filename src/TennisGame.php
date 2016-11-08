@@ -55,6 +55,10 @@ class TennisGame
                 $playerwins = $this->player2;
         }
 
+        if($diferencia >= 2 || $diferencia <= -2){
+            return $this->guanya($playerwins);
+        }
+
         return $this->scoreAvantatge($playerwins);
 
 
@@ -66,5 +70,10 @@ class TennisGame
     protected function scoreAvantatge($player)
     {
         return "Avantatge " . $player->name();
+    }
+
+    protected function guanya($player)
+    {
+        return "Guanya " . $player->name();
     }
 }
